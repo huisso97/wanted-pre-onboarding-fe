@@ -19,7 +19,6 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
       }
       return data;
     });
-
     setTodoData(newTodoData);
   };
 
@@ -33,8 +32,8 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
     let newTodoData = todoData.map((data) => {
       if (data.id === id) {
         data.todo = editTitle;
+        editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id });
       }
-      editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id });
       return data;
     });
     setTodoData(newTodoData);

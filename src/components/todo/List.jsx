@@ -15,7 +15,7 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
       if (data.id === id) {
         data.isCompleted = !data.isCompleted;
         setCompleted(!completed);
-        editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id }).then((res) => console.log(res));
+        editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id });
       }
       return data;
     });
@@ -34,7 +34,7 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
       if (data.id === id) {
         data.todo = editTitle;
       }
-      editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id }).then((res) => console.log(res));
+      editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id });
       return data;
     });
     setTodoData(newTodoData);

@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Btn } from "../../pages/Todo";
+import { editTodo } from "../../utils/todo";
 import { InputWrapper } from "./Form";
 
-const List = React.memo(({ id, title, completed, todoData, setTodoData, handleCheck }) => {
-  const [editTitle, setEditTitle] = useState(title);
+const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
+  const { id, todo, isCompleted } = data;
+  const [completed, setCompleted] = useState(isCompleted);
+  const [editTitle, setEditTitle] = useState(todo);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleCompleteChange = (id) => {
     let newTodoData = todoData.map((data) => {
       if (data.id === id) {
-        data.completed = !data.completed;
+        data.isCompleted = !data.isCompleted;
+        setCompleted(!completed);
+        editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id }).then((res) => console.log(res));
       }
       return data;
     });
-    console.log(completed);
+
     setTodoData(newTodoData);
-    localStorage.setItem("todoData", JSON.stringify(newTodoData));
   };
 
   const handleEditChange = (e) => {
@@ -40,16 +44,12 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, handleCh
     return (
       <Wrapper>
         <FormWrapper onSubmit={handleSubmit}>
-          <InputWrapper value={editTitle} onChange={handleEditChange} placeholder={title} />
+          <InputWrapper value={editTitle} onChange={handleEditChange} placeholder={todo} />
         </FormWrapper>
 
         <BtnWrapper>
-          <Btn onClick={() => handleCheck(id)} className="float-right pb-1 mx-4">
-            x
-          </Btn>
-          <Btn onClick={handleSubmit} className="float-right pb-1 mx-4">
-            save
-          </Btn>
+          <Btn onClick={() => handleCheck(id)}>x</Btn>
+          <Btn onClick={handleSubmit}>save</Btn>
         </BtnWrapper>
       </Wrapper>
     );
@@ -57,8 +57,8 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, handleCh
     return (
       <Wrapper key={id}>
         <MinWrapper>
-          <input type="checkbox" defaultChecked={false} onChange={() => handleCompleteChange(id)} />
-          <Item completed={completed}>{title}</Item>
+          <input type="checkbox" defaultChecked={completed} onChange={() => handleCompleteChange(id)} />
+          <Item completed={completed}>{todo}</Item>
         </MinWrapper>
         <BtnWrapper>
           <Btn onClick={() => handleCheck(id)}>x</Btn>

@@ -1,48 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Form from "../components/todo/Form";
 import Lists from "../components/todo/Lists";
-import { removeToken } from "../utils/token";
-
-const initialTodoData = localStorage.getItem("todoData") ? JSON.parse(localStorage.getItem("todoData")) : [];
+import { createTodo, getTodo } from "../utils/todo";
 
 function Todo() {
-  const [todoData, setTodoData] = useState(initialTodoData);
+  const [todoData, setTodoData] = useState();
   const [value, setValue] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    try {
+      getTodo().then((res) => {
+        if (res.status === 200) {
+          setTodoData(res.data);
+        }
+      });
+    } catch (err) {}
+  }, [todoData]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let newTodo = {
-      id: Date.now(),
-      title: value,
-      completed: false,
-    };
 
-    setTodoData((prev) => [...prev, newTodo]);
-    localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
+    try {
+      createTodo({ todo: value }).then((res) => setTodoData((prev) => [...prev, res.data]));
+    } catch (err) {
+      console.error(err);
+    }
 
-    console.log(todoData);
     setValue("");
   };
 
-  const deleteAll = () => {
-    setTodoData([]);
-    localStorage.setItem("todoData", JSON.stringify([]));
-  };
   return (
     <Container>
-      <button
-        onClick={() => {
-          removeToken();
-          window.location.reload();
-        }}
-      >
-        로그아웃
-      </button>
       <Box>
         <Upper>
           <Title>할 일 목록</Title>
-          <Btn onClick={deleteAll}>전체 삭제</Btn>
         </Upper>
         <Lists todoData={todoData} setTodoData={setTodoData} />
         <Form setValue={setValue} value={value} handleSubmit={handleSubmit} />

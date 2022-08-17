@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { InputWrapper } from "../components/todo/Form";
+import { signUp } from "../utils/auth";
 import { setToken } from "../utils/token";
 import { Box, BtnBox, FormBox, InputBox, SemiTitle } from "./Login";
 import { Container, Title } from "./Todo";
-
-const BASE_URL = "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -26,7 +25,7 @@ function Signup() {
     e.preventDefault();
     const data = JSON.stringify({ email: email, password: password });
     try {
-      await axios.post(BASE_URL + "/auth/signup", data, { headers: { "Content-Type": "application/json" } }).then((res) => {
+      signUp(data).then((res) => {
         console.log("response:", res);
         if (res.status === 201) {
           const {

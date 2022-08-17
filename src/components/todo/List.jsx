@@ -32,12 +32,12 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
 
     let newTodoData = todoData.map((data) => {
       if (data.id === id) {
-        data.title = editTitle;
+        data.todo = editTitle;
       }
+      editTodo({ todo: data.todo, isCompleted: data.isCompleted, id: data.id }).then((res) => console.log(res));
       return data;
     });
     setTodoData(newTodoData);
-    localStorage.setItem("todoData", JSON.stringify(newTodoData));
     setIsEditing(false);
   };
   if (isEditing) {
@@ -48,8 +48,8 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
         </FormWrapper>
 
         <BtnWrapper>
-          <Btn onClick={() => handleCheck(id)}>x</Btn>
-          <Btn onClick={handleSubmit}>save</Btn>
+          <Btn onClick={() => handleCheck(id)}>삭제</Btn>
+          <Btn onClick={handleSubmit}>저장</Btn>
         </BtnWrapper>
       </Wrapper>
     );
@@ -61,8 +61,8 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
           <Item completed={completed}>{todo}</Item>
         </MinWrapper>
         <BtnWrapper>
-          <Btn onClick={() => handleCheck(id)}>x</Btn>
-          <Btn onClick={() => setIsEditing(true)}>Edit</Btn>
+          <Btn onClick={() => handleCheck(id)}>삭제</Btn>
+          <Btn onClick={() => setIsEditing(true)}>수정</Btn>
         </BtnWrapper>
       </Wrapper>
     );
@@ -99,5 +99,5 @@ const MinWrapper = styled.div`
 `;
 
 const Item = styled.span`
-  color: ${(props) => (props.completed ? props.theme.bgColor : "black")};
+  text-decoration: ${(props) => (props.completed ? "line-through" : "")};
 `;

@@ -5,8 +5,7 @@ import { setToken } from "../utils/token";
 import { Btn, Container, Title } from "./Todo";
 import styled from "styled-components";
 import { InputWrapper } from "../components/todo/Form";
-
-const BASE_URL = "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/";
+import { signIn } from "../utils/auth";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,7 +22,7 @@ function Login() {
     e.preventDefault();
     const data = JSON.stringify({ email: email, password: password });
     try {
-      await axios.post(BASE_URL + "/auth/signin", data, { headers: { "Content-Type": "application/json" } }).then((res) => {
+      signIn(data).then((res) => {
         if (res.status === 200) {
           const {
             data: { access_token: accessToken },

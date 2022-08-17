@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 프론트엔드 - 선발 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Skill
 
-## Available Scripts
+- React
+- Styled-components
+- react-router-dom
 
-In the project directory, you can run:
+## 파일 구조
 
-### `npm start`
+> /api - api 요청 템플릿 구성 폴더
+> /components/todo - todo 관련 컴포넌트 폴더
+> /pages - 페이지 파일이 있는 폴더
+> /styles - globalStyle 및 theme 파일이 있는 폴더
+> utils - 각요청 response 반환 함수 폴더
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 기능 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### :: 1. 로그인 / 회원가입
 
-### `npm test`
+![Animation](README.assets/Animation-16607266486871.gif)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![회원가입](README.assets/회원가입.gif)
 
-### `npm run build`
+- 로그인은 `/`, 회원가입은 `signup` 별도의 경로로 분리하여 작업했습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 이메일과 비밀번호 입력시, 각 유효성에 대한 실시간 안내 문구를 함께 렌더링합니다.
+- 이메일과 비밀번호 조건이 만족되었을 때, 버튼이 활성화됩니다.
+- 로그인 및 회원가입이 성공하면 `/todo` 경로로 이동합니다. 
+- accessToken이 있는 경우, `/todo`로 리다이렉트 되고, 없을 때 `/todo` 접근 시, `/`로 리다이렉트 됩니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### :: 2. 투두 리스트
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ![Animation](README.assets/Animation-16607268539173.gif)
 
-### `npm run eject`
+- `/todo` 경로로 최초 진입 시, accessToken을 통해 기존 todo list를 받아 렌더링해줍니다.
+- 유저는 체크박스를  통해 완료 표시를 할 수 있으며, 수정 버튼을 통해 실시간 수정 및 투두 리스트에 수정 사항이 반영됩니다.
+- x 버튼을 통하여 해당 내역을 삭제할 수 있습니다. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 실행 방법
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm i 
 
-## Learn More
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+## 보완해야할 부분 
+
+- 로그인, 회원가입의 경우, 커스텀 훅을 통해 공통된 메서드들을 재사용할 수 있도록 보완할 예정입니다. 

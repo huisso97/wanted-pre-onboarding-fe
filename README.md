@@ -6,14 +6,6 @@
 - Styled-components
 - react-router-dom
 
-## 파일 구조
-
-> /api - api 요청 템플릿 구성 폴더
-> /components/todo - todo 관련 컴포넌트 폴더
-> /pages - 페이지 파일이 있는 폴더
-> /styles - globalStyle 및 theme 파일이 있는 폴더
-> utils - 각요청 response 반환 함수 폴더 
-
 ## 기능 
 
 ### :: 1. 로그인 / 회원가입

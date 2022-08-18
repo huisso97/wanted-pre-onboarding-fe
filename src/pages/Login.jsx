@@ -21,20 +21,22 @@ function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const data = JSON.stringify({ email: email, password: password });
-    try {
-      signIn(data).then((res) => {
+
+    signIn(data)
+      .then((res) => {
         if (res.status === 200) {
           const {
             data: { access_token: accessToken },
           } = res;
-          console.log(res);
           setToken(JSON.stringify(accessToken));
           window.location.reload();
         }
+      })
+      .catch((res) => {
+        if (res.response.status === 404) {
+          alert("입력 정보가 틀렸습니다.");
+        }
       });
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   // dfadf

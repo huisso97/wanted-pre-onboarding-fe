@@ -1,6 +1,7 @@
 export const Theme = {
-  bgColor: "#EBD8C3",
-  lightBgColor: "#F7E9D7",
+  bgColor: "white",
+  lightBgColor: "#3F72AF",
   textColor: "black",
-  accentColor: "#FFEEEE",
+  btnTextColor: "white",
+  accentColor: "#DBE2EF",
 };

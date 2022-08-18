@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { setToken } from "../utils/token";
@@ -68,15 +67,15 @@ function Login() {
   return (
     <Container>
       <Box>
-        <Title>Login</Title>
+        <Title>로그인</Title>
         <FormBox onSubmit={onSubmit}>
-          <SemiTitle>이메일 : </SemiTitle>
-          <InputWrapper type="text" onChange={handleEmail} />
-          {email.length > 0 && <span>{emailAlert}</span>}
-          <SemiTitle>비밀번호 :</SemiTitle>
+          <SemiTitle>이메일 </SemiTitle>
+          <InputBox type="text" onChange={handleEmail} />
+
+          <SemiTitle>비밀번호</SemiTitle>
           <InputBox type="password" onChange={handlePassword} />
 
-          <BtnBox type="submit" disabled={!isEmail && !isPassword}>
+          <BtnBox type="submit" disabled={!isEmail || !isPassword}>
             로그인
           </BtnBox>
         </FormBox>
@@ -94,7 +93,7 @@ export const Box = styled.div`
   background-color: ${(props) => props.theme.accentColor};
   padding: 10px;
   width: 40%;
-  height: 50%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -111,16 +110,24 @@ export const InputBox = styled(InputWrapper)`
 `;
 
 export const BtnBox = styled(Btn)`
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+    background: gray;
+    border-color: gray;
+    color: ${(props) => props.theme.textColor};
+  }
   margin-top: 10px;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.btnTextColor};
   font-weight: 600;
 `;
 
 export const SignupBtn = styled(Btn)`
   border-color: aliceblue;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.btnTextColor};
 `;
 
 export const SemiTitle = styled.span`
-  margin: 5px 0px;
+  /* margin-top:/x; */
+  font-weight: 600;
 `;

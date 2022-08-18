@@ -56,7 +56,7 @@ const List = React.memo(({ data, todoData, setTodoData, handleCheck }) => {
     return (
       <Wrapper key={id}>
         <MinWrapper>
-          <input type="checkbox" defaultChecked={completed} onChange={() => handleCompleteChange(id)} />
+          <Input defaultChecked={completed} onChange={() => handleCompleteChange(id)} />
           <Item completed={completed}>{todo}</Item>
         </MinWrapper>
         <BtnWrapper>
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
   align-items: center;
   margin-right: 5px;
   padding: 5px;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   border-radius: 10px;
   width: 100%;
 `;
@@ -99,4 +99,18 @@ const MinWrapper = styled.div`
 
 const Item = styled.span`
   text-decoration: ${(props) => (props.completed ? "line-through" : "")};
+  font-size: large;
+  font-weight: 600;
+  margin-left: 10px;
+  color: ${(props) => props.theme.btnTextColor};
+`;
+
+const Input = styled.input.attrs({
+  type: "checkbox",
+})`
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  border: 2px solid #bcbcbc;
+  cursor: pointer;
 `;

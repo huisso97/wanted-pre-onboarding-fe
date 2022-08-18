@@ -1,9 +1,9 @@
-import axios from "axios";
+import styled from "styled-components";
 import React, { useCallback, useState } from "react";
-import { InputWrapper } from "../components/todo/Form";
+import { Link } from "react-router-dom";
 import { signUp } from "../utils/auth";
 import { setToken } from "../utils/token";
-import { Box, BtnBox, FormBox, InputBox, SemiTitle } from "./Login";
+import { Box, BtnBox, FormBox, InputBox, SemiTitle, SignupBtn } from "./Login";
 import { Container, Title } from "./Todo";
 
 function Signup() {
@@ -24,8 +24,8 @@ function Signup() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const data = JSON.stringify({ email: email, password: password });
-    try {
-      signUp(data).then((res) => {
+    signUp(data)
+      .then((res) => {
         console.log("response:", res);
         if (res.status === 201) {
           const {
@@ -33,13 +33,13 @@ function Signup() {
           } = res;
           setToken(JSON.stringify(accessToken));
           window.location.reload();
-        } else if (res.status === 400) {
+        }
+      })
+      .catch((res) => {
+        if (res.response.status === 400) {
           alert("이미 사용자가 있습니다. 다른 정보를 입력해주세요");
         }
       });
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   const handleEmail = useCallback((e) => {
@@ -87,25 +87,44 @@ function Signup() {
 
   return (
     <Container>
-      <Box>
+      <SignupBox>
         <Title>Signup</Title>
         <FormBox onSubmit={onSubmit}>
-          <SemiTitle>이메일 : </SemiTitle>
-          <InputWrapper type="text" onChange={handleEmail} />
-          {email.length > 0 && <span>{emailAlert}</span>}
-          <SemiTitle>비밀번호 :</SemiTitle>
+          <SemiTitle>이메일 </SemiTitle>
+          <InputBox type="text" onChange={handleEmail} />
+          <AlertBox>{email.length > 0 && <Alert>{emailAlert}</Alert>}</AlertBox>
+          <SemiTitle>비밀번호</SemiTitle>
           <InputBox type="password" onChange={handlePassword} />
-          {password.length > 0 && <span>{passwordAlert}</span>}
-          <SemiTitle>비밀번호 확인 :</SemiTitle>
+          <AlertBox>{password.length > 0 && <Alert>{passwordAlert}</Alert>}</AlertBox>
+
+          <SemiTitle>비밀번호 확인</SemiTitle>
           <InputBox type="password" onChange={handlePasswordConfirm} />
-          {passwordConfirm.length > 0 && <span>{passwordConfirmAlert}</span>}
-          <BtnBox type="submit" disabled={!isEmail && !isPassword && !isPasswordConfirm}>
+          <AlertBox>{passwordConfirm.length > 0 && <Alert>{passwordConfirmAlert}</Alert>}</AlertBox>
+
+          <BtnBox type="submit" disabled={!isEmail || !isPassword || !isPasswordConfirm}>
             회원가입
           </BtnBox>
         </FormBox>
-      </Box>
+        <SignupBtn>
+          <Link to="/">로그인</Link>
+        </SignupBtn>
+      </SignupBox>
     </Container>
   );
 }
 
 export default Signup;
+
+const SignupBox = styled(Box)`
+  height: 70%;
+`;
+
+export const Alert = styled.span`
+  display: inline-block;
+  position: absolute;
+`;
+
+export const AlertBox = styled.div`
+  margin-top: 3px;
+  margin-bottom: 23px;
+`;

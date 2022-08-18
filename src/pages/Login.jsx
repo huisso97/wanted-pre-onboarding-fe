@@ -34,6 +34,8 @@ function Login() {
       .catch((res) => {
         if (res.response.status === 404) {
           alert("입력 정보가 틀렸습니다.");
+        } else if (res.response.status === 401) {
+          alert("비밀번호가 틀렸습니다.");
         }
       });
   };
